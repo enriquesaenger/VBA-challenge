@@ -37,10 +37,13 @@ Sub Challenge1()
         ws.Range("K1").Value = "Percentage Change"
         ws.Range("L1").Value = "Total Stock Volume"
         
+        ' Resize Columns to fit data
+        Columns("I:L").AutoFit
+
         ' Add Column Names for Challenge 1
         ws.Range("P1").Value = "Ticker"
         ws.Range("Q1").Value = "Value"
-        
+
         ' Add Names to cells for Challenge 1
         ws.Range("O2").Value = "Greatest % Increase"
         ws.Range("O3").Value = "Greatest % Decrease"
