@@ -46,6 +46,9 @@ Sub Challenge1()
         ws.Range("O3").Value = "Greatest % Decrease"
         ws.Range("O4").Value = "Greatest Total Volume"
         
+        ' Resize Column 15 (Column "O") to fit the data
+        ws.Columns(15).AutoFit
+        
         ' Reset Greatest variables for each worksheet
         greatestPercentIncrease = 0
         greatestPercentDecrease = 0
@@ -76,7 +79,7 @@ Sub Challenge1()
                 ' Calculate Yearly Change
                 yearlyChange = closingPrice - openingPrice
                 
-                  ' If totalVolume is greatest yet, write to greatestTotalVolume and write Ticker to greatestTotalVolumeTicker
+                ' If totalVolume is greatest yet, write to greatestTotalVolume and write Ticker to greatestTotalVolumeTicker
                 If totalVolume > greatestTotalVolume Then
                     greatestTotalVolume = totalVolume
                     greatestTotalVolumeTicker = tickerSymbol
@@ -84,26 +87,27 @@ Sub Challenge1()
                 
                 ' Fixing dividing by zero
                 If openingPrice <> 0 Then
-                    ' Calculate yearlyPercentageChange
+                ' Calculate yearlyPercentageChange
                     yearlyPercentageChange = (yearlyChange / openingPrice)
-                    
-                    ' If yearlyPercentageChange is greatest increase or greatest decrease, write to respective variable and update [respective]Ticker
-                    If yearlyPercentageChange > greatestPercentageIncrease Then
-                        greatestPercentageIncrease = yearlyPercentageChange
-                        greatestPercentageIncreaseTicker = tickerSymbol
-                    ElseIf yearlyPercentageChange < greatestPercentageDecrease Then
-                        greatestPercentageDecrease = yearlyPercentageChange
-                        greatestPercentageDecreaseTicker = tickerSymbol
-                    End If
-                    
                 Else
                     yearlyPercentageChange = 0
+                End If
+                
+                ' If yearlyPercentageChange is greatest increase or greatest decrease, write to respective variable and update [respective]Ticker
+                If yearlyPercentageChange > greatestPercentIncrease Then
+                    greatestPercentIncrease = yearlyPercentageChange
+                    greatestPercentIncreaseTicker = tickerSymbol
+                ElseIf yearlyPercentageChange < greatestPercentDecrease Then
+                    greatestPercentDecrease = yearlyPercentageChange
+                    greatestPercentDecreaseTicker = tickerSymbol
                 End If
                 
                 ' Write tickerSymbol to cell in 9th column
                 ws.Cells(row, 9).Value = tickerSymbol
                 ' Write yearlyChange to cell in 10th column
                 ws.Cells(row, 10).Value = yearlyChange
+                ' Format 10th column to 2 decimal places
+                ws.Cells(row, 10).NumberFormat = "0.00"
                 
                 ' Conditional Formatting for yearlyChange in 10th colum
                 If yearlyChange > 0 Then
@@ -114,9 +118,8 @@ Sub Challenge1()
                 
                 ' Write yearlyPercentageChange to cell in 11th column
                 ws.Cells(row, 11).Value = yearlyPercentageChange
-                
-                ' Percentage Styling for cell in 11th column
-                ws.Cells(row, 11).Style = "Percent"
+                ' Format 11th column to 2 decimal places and percent
+                ws.Cells(row, 11).NumberFormat = "0.00%"
                 
                 ' Write totalVolume to cell in 12th column
                 ws.Cells(row, 12).Value = totalVolume
@@ -132,18 +135,18 @@ Sub Challenge1()
         row = 2
         
         ' Write greatestPercentageIncreaseTicker to P2
-        ws.Range("P2").Value = greatestPercentageIncreaseTicker
+        ws.Range("P2").Value = greatestPercentIncreaseTicker
         ' Write greatestPercentageIncrease to Q2
-        ws.Range("Q2").Value = greatestPercentageIncrease
-        ' Change style in Q2 to Percent
-        ws.Range("Q2").Style = "Percent"
+        ws.Range("Q2").Value = greatestPercentIncrease
+        ' Format Q2 to 2 decimal places and percent
+        ws.Range("Q2").NumberFormat = "0.00%"
         
         ' Write greatestPercentageDecreaseTicker to P3
-        ws.Range("P3").Value = greatestPercentageDecreaseTicker
+        ws.Range("P3").Value = greatestPercentDecreaseTicker
         ' Write greatestPercentageDecrease to Q3
-        ws.Range("Q3").Value = greatestPercentageDecrease
-        ' Change style in Q3 to Percent
-        ws.Range("Q3").Style = "Percent"
+        ws.Range("Q3").Value = greatestPercentDecrease
+        ' Format Q3 to 2 decimal places and percent
+        ws.Range("Q3").NumberFormat = "0.00%"
         
         ' Write greatestTotalVolumeTicker to P4
         ws.Range("P4").Value = greatestTotalVolumeTicker
@@ -152,5 +155,3 @@ Sub Challenge1()
         
     Next ws
 End Sub
-
-
