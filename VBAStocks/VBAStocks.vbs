@@ -1,4 +1,4 @@
-Sub WallStreet()
+Sub VBAStocks()
 
     ' Declaring variables
     Dim counter As Double
@@ -31,6 +31,9 @@ Sub WallStreet()
         Range("K1").Value = "Percentage Change"
         Range("L1").Value = "Total Stock Volume"
         
+        ' Resize Columns to fit data
+        Columns("I:L").AutoFit
+
         ' Find last row in each worksheet
         lastRow = ws.Cells(Rows.Count, 1).End(xlUp).row
         
@@ -67,6 +70,8 @@ Sub WallStreet()
                 ws.Cells(row, 9).Value = tickerSymbol
                 ' Write yearlyChange to cell in 10th column
                 ws.Cells(row, 10).Value = yearlyChange
+                ' Format 10th column to 2 decimal places
+                ws.Cells(row, 10).NumberFormat = "0.00"
                 
                 ' Conditional Formatting for yearlyChange in 10th colum
                 If yearlyChange > 0 Then
@@ -78,8 +83,8 @@ Sub WallStreet()
                 ' Write yearlyPercentageChange to cell in 11th column
                 ws.Cells(row, 11).Value = yearlyPercentageChange
                 
-                ' Percentage Styling for cell in 11th column
-                ws.Cells(row, 11).Style = "Percent"
+                ' Format 11th column to 2 decimal places and percent
+                ws.Cells(row, 11).NumberFormat = "0.00%"
                 
                 ' Write totalVolume to cell in 12th column
                 ws.Cells(row, 12).Value = totalVolume
